@@ -1,0 +1,18 @@
+<!-- app/views/home/index.html.erb -->
+<%= render 'shared/header' %>
+
+<main>
+    <h1>Welcome to Our Store</h1>
+    <h2>Newest Products</h2>
+    <ul>
+        <% @newest_products.each do |product| %>
+        <li>
+            <h3><%= product.name %></h3>
+            <p><%= product.description %></p>
+            <p>Price: <%= number_to_currency(product.price) %></p>
+        </li>
+        <% end %>
+    </ul>
+</main>
+
+<%= render 'shared/footer' %>
