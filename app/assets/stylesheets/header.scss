@@ -1,26 +1,43 @@
-header {
-  background-color: #f8f9fa;
-  padding: 10px 0;
-  border-bottom: 1px solid #e7e7e7;
+/* app/assets/stylesheets/header.css */
+.navbar {
+  background-color: #007bff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
+.navbar-brand {
+  color: #fff;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
 
-    li {
-      margin: 0 15px;
+.navbar-menu {
+  display: flex;
+}
 
-      a {
-        text-decoration: none;
-        color: #007bff;
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
 
-        &:hover {
-          color: #0056b3;
-        }
-      }
-    }
-  }
+.nav-item {
+  margin-left: 1rem;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.navbar-right {
+  margin-left: auto;
 }

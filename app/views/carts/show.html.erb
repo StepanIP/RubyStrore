@@ -1,0 +1,61 @@
+<%= render 'shared/header' %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+      .cart-item {
+          border-bottom: 1px solid #ddd;
+          padding: 10px 0;
+      }
+      .cart-item:last-child {
+          border-bottom: none;
+      }
+      .cart-total {
+          font-size: 1.5rem;
+          font-weight: bold;
+          text-align: right;
+      }
+  </style>
+</head>
+<body>
+<div class="container my-5">
+  <h1 class="mb-4">Shopping Cart</h1>
+  <% if @cart_items.any? %>
+    <div class="list-group">
+      <% @cart_items.each do |item| %>
+        <div class="list-group-item cart-item">
+          <div class="row">
+            <div class="col-md-2">
+              <%= image_tag item.product.photo_path, alt: item.product.name, class: "img-fluid" %>
+            </div>
+            <div class="col-md-6">
+              <h5><%= item.product.name %></h5>
+              <p>Quantity: <%= item.quantity %></p>
+            </div>
+            <div class="col-md-4 text-end">
+              <p class="mb-0">$<%= item.product.price * item.quantity %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="cart-total mt-4">
+      Total: $<%= @cart_items.sum { |item| item.product.price * item.quantity } %>
+    </div>
+<!--    <div class="text-end mt-3">-->
+      <%#= link_to 'Checkout', checkout_path, class: "btn btn-success" %>
+<!--    </div>-->
+  <% else %>
+    <p>Your cart is empty.</p>
+    <%= link_to 'Continue Shopping', products_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<%= render 'shared/footer' %>

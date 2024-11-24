@@ -3,8 +3,8 @@
 ActiveRecord::Base.transaction do
   begin
     # Створення користувачів
-    user1 = User.create!(name: 'John Doe', email: 'john11@example.com', password: 'password')
-    user2 = User.create!(name: 'Jane Smith', email: 'jane11@example.com', password: 'password')
+    user1 = User.create!(name: 'John Doe', email: 'john11@example.com', password: 'password', password_confirmation: "password")
+    user2 = User.create!(name: 'Jane Smith', email: 'jane11@example.com', password: 'password', password_confirmation: "password")
 
     # Створення товарів
     product1 = Product.create!(
@@ -13,7 +13,8 @@ ActiveRecord::Base.transaction do
       price: 19.99,
       product_type: 'clothing',
       category: 'Tops',
-      color: 'Red'
+      color: 'Red',
+      photo_path: 'products/tshirt.jpg'
     )
 
     product2 = Product.create!(
@@ -22,7 +23,8 @@ ActiveRecord::Base.transaction do
       price: 49.99,
       product_type: 'clothing',
       category: 'Bottoms',
-      color: 'Blue'
+      color: 'Blue',
+      photo_path: 'products/jeans.jpg'
     )
 
     product3 = Product.create!(
@@ -31,7 +33,8 @@ ActiveRecord::Base.transaction do
       price: 79.99,
       product_type: 'footwear',
       category: 'Shoes',
-      color: 'White'
+      color: 'White',
+      photo_path: 'products/sneakers.jpg'
     )
 
     product4 = Product.create!(
@@ -40,7 +43,8 @@ ActiveRecord::Base.transaction do
       price: 99.99,
       product_type: 'clothing',
       category: 'Outerwear',
-      color: 'Black'
+      color: 'Black',
+      photo_path: 'products/jacket.jpg'
     )
 
     # Створення варіантів доставки
@@ -67,6 +71,6 @@ ActiveRecord::Base.transaction do
 
   rescue ActiveRecord::RecordInvalid => e
     puts "Transaction failed: #{e.message}"
-    raise ActiveRecord::Rollback  # Скасовує всі зміни в транзакції, якщо є помилка
+    raise ActiveRecord::Rollback # Скасовує всі зміни в транзакції, якщо є помилка
   end
 end

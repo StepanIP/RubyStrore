@@ -10,14 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_21_192701) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_24_190444) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
+  end
+
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "product_id", null: false
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_carts_on_product_id"
+    t.integer "cart_item_id"
+    t.index ["cart_item_id"], name: "index_carts_on_cart_item_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
@@ -66,6 +76,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_192701) do
     t.string "product_type"
     t.string "category", null: false
     t.string "color", null: false
+    t.string "photo_path"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -81,14 +92,20 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_192701) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email", null: false
-    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "carts", "products"
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "products"
+  add_foreign_key "carts", "cart_items"
   add_foreign_key "carts", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "order_items", "orders"

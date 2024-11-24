@@ -1,15 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>YourAppName</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+<footer class="bg-dark text-light py-4">
+  <div class="container">
+    <div class="row">
+      <!-- Brand and Description -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase">BrandName</h5>
+        <p class="small">Your go-to platform for premium services and excellent support. Connect with us anytime!</p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#home" class="text-light text-decoration-none">Home</a></li>
+          <li><a href="#about" class="text-light text-decoration-none">About Us</a></li>
+          <li><a href="#services" class="text-light text-decoration-none">Services</a></li>
+          <li><a href="#contact" class="text-light text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Contact Info -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase">Contact Us</h5>
+        <ul class="list-unstyled">
+          <li><i class="bi bi-telephone"></i> +123 456 789</li>
+          <li><i class="bi bi-envelope"></i> info@brandname.com</li>
+          <li><i class="bi bi-geo-alt"></i> 123 Main Street, City, Country</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-secondary">
+    <!-- Bottom Footer -->
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-0 small">&copy; 2024 BrandName. All Rights Reserved.</p>
+      <div>
+        <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
-
-<body>
-<%= yield %>
-</body>
-</html>
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
