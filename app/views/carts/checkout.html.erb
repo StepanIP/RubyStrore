@@ -1,0 +1,42 @@
+<!-- app/views/carts/checkout.html.erb -->
+<%= render 'shared/header' %>
+<div class="container my-5">
+  <h2>Checkout</h2>
+  <%= form_with url: checkout_path, method: :post, local: true do |form| %>
+    <div class="mb-3">
+      <h4>Delivery Options</h4>
+      <% @delivery_options.each do |option| %>
+        <div class="form-check">
+          <%= form.radio_button :delivery_option, option, class: "form-check-input" %>
+          <%= form.label :delivery_option, option, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
+      <h4>Payment Options</h4>
+      <% @payment_options.each do |option| %>
+        <div class="form-check">
+          <%= form.radio_button :payment_option, option, class: "form-check-input" %>
+          <%= form.label :payment_option, option, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
+      <h4>Order Summary</h4>
+      <ul class="list-group">
+        <% @cart_items.each do |item| %>
+          <li class="list-group-item">
+            <%= item.product.name %> - <%= item.quantity %> x $<%= item.product.price %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="mt-4">
+      <%= form.submit "Place Order", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+<%= render 'shared/footer' %>

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%= javascript_include_tag 'application.js', 'data-turbo-track': 'reload' %>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shopping Cart</title>
@@ -35,6 +36,8 @@
             <div class="col-md-6">
               <h5><%= item.product.name %></h5>
               <p>Quantity: <%= item.quantity %></p>
+              <%= link_to 'Decrease Quantity', decrease_quantity_cart_path(item), method: :post, class: "btn btn-warning btn-sm" %>
+              <%= link_to 'Remove', remove_from_cart_cart_path(item), method: :post, class: "btn btn-danger btn-sm" %>
             </div>
             <div class="col-md-4 text-end">
               <p class="mb-0">$<%= item.product.price * item.quantity %></p>
@@ -46,9 +49,9 @@
     <div class="cart-total mt-4">
       Total: $<%= @cart_items.sum { |item| item.product.price * item.quantity } %>
     </div>
-<!--    <div class="text-end mt-3">-->
-      <%#= link_to 'Checkout', checkout_path, class: "btn btn-success" %>
-<!--    </div>-->
+    <div class="text-end mt-3">
+      <%= link_to 'Checkout', checkout_cart_path, method: :post, class: "btn btn-success" %>
+    </div>
   <% else %>
     <p>Your cart is empty.</p>
     <%= link_to 'Continue Shopping', products_path, class: "btn btn-primary" %>
