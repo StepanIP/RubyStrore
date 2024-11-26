@@ -60,6 +60,10 @@
     </div>
 
     <div class="col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Product List</h2>
+        <%= link_to 'Create New Product', new_product_path, class: "btn btn-success" %>
+      </div>
       <div class="row">
         <% @products.each_slice(3) do |product_row| %>
           <div class="row">

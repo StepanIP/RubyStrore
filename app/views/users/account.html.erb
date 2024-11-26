@@ -15,7 +15,21 @@
       <h5 class="card-title">Name: <%= @user.name %></h5>
       <p class="card-text">Email: <%= @user.email %></p>
       <p class="card-text">Reviews: <%= @user.reviews.count %></p>
-      <p class="card-text">Feedbacks: <%= @user.feedbacks.count %></p>
+      <ul class="list-group mb-3">
+        <% @user.reviews.order(created_at: :desc).each do |review| %>
+          <li class="list-group-item">
+            <strong><%= review.created_at.strftime("%Y-%m-%d") %>:</strong> <%= review.content %>
+          </li>
+        <% end %>
+      </ul>
+      <p class="card-text">Orders: <%= Order.where(user: @user).count %></p>
+      <ul class="list-group">
+        <% Order.where(user: @user).order(created_at: :desc).each do |order| %>
+          <li class="list-group-item">
+            <strong>Order ID:</strong> <%= order.id %> - <strong>Date:</strong> <%= order.created_at.strftime("%Y-%m-%d") %> - <strong>Total Price:</strong> $<%= order.total_price %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>

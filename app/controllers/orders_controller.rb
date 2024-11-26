@@ -1,36 +1,17 @@
 # app/controllers/orders_controller.rb
 class OrdersController < ApplicationController
-  def index
-    @orders = OrderService.list_orders
-    render json: @orders
-  end
-
   def create
-    @order = OrderService.create_order(order_params)
-    if @order.save
-      render json: @order, status: :created
-    else
-      render json: @order.errors, status: :unprocessable_entity
+    order = Order.create(order_params.merge(user: current_user))
+    current_user.cart.cart_items.each do |cart_item|
+      order.order_items.create(product: cart_item.product, quantity: cart_item.quantity)
     end
-  end
-
-  def update
-    @order = OrderService.update_order(params[:id], order_params)
-    if @order.save
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    OrderService.delete_order(params[:id])
-    head :no_content
+    current_user.cart.cart_items.destroy_all
+    redirect_to account_path(order), notice: 'Order placed successfully!'
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:user_id, :delivery_option_id, :total_price)
+    params.require(:order).permit(:delivery_option, :total_price, order_items_attributes: [:product_id, :quantity])
   end
 end

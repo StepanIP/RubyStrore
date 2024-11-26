@@ -1,42 +1,102 @@
-<!-- app/views/carts/checkout.html.erb -->
 <%= render 'shared/header' %>
 <div class="container my-5">
-  <h2>Checkout</h2>
-  <%= form_with url: checkout_path, method: :post, local: true do |form| %>
-    <div class="mb-3">
-      <h4>Delivery Options</h4>
+  <h2 class="text-center mb-4">Complete Your Purchase</h2>
+  <%= form_with model: Order.new, url: orders_path, method: :post, local: true, class: "shadow p-4 rounded bg-light" do |form| %>
+
+
+    <div class="mb-4">
+      <h4 class="text-primary">Delivery Options</h4>
       <% @delivery_options.each do |option| %>
         <div class="form-check">
-          <%= form.radio_button :delivery_option, option, class: "form-check-input" %>
+          <%= form.radio_button :delivery_option, option, class: "form-check-input", data: { target: "delivery-details" } %>
           <%= form.label :delivery_option, option, class: "form-check-label" %>
         </div>
       <% end %>
     </div>
 
-    <div class="mb-3">
-      <h4>Payment Options</h4>
+    <div id="delivery-details-container" class="mb-3" style="display: none;">
+      <h5 class="text-secondary">Delivery Details</h5>
+      <div class="mb-3">
+        <%= form.label :address, "Address", class: "form-label" %>
+        <%= form.text_field :address, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :postal_code, "Postal Code", class: "form-label" %>
+        <%= form.text_field :postal_code, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h4 class="text-primary">Payment Options</h4>
       <% @payment_options.each do |option| %>
         <div class="form-check">
-          <%= form.radio_button :payment_option, option, class: "form-check-input" %>
+          <%= form.radio_button :payment_option, option, class: "form-check-input", data: { target: "payment-details" } %>
           <%= form.label :payment_option, option, class: "form-check-label" %>
         </div>
       <% end %>
     </div>
 
-    <div class="mb-3">
-      <h4>Order Summary</h4>
+    <div id="payment-details" class="mb-3" style="display: none;">
+      <h5 class="text-secondary">Payment Details</h5>
+      <div class="mb-3">
+        <%= form.label :card_number, "Card Number", class: "form-label" %>
+        <%= form.text_field :card_number, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :expiry_date, "Expiry Date (MM/YY)", class: "form-label" %>
+        <%= form.text_field :expiry_date, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :cvv, "CVV", class: "form-label" %>
+        <%= form.text_field :cvv, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h4 class="text-primary">Order Summary</h4>
       <ul class="list-group">
         <% @cart_items.each do |item| %>
-          <li class="list-group-item">
-            <%= item.product.name %> - <%= item.quantity %> x $<%= item.product.price %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span><%= item.product.name %> - <%= item.quantity %> x $<%= item.product.price %></span>
+            <span class="badge bg-primary rounded-pill">$<%= item.quantity * item.product.price %></span>
           </li>
         <% end %>
       </ul>
     </div>
 
-    <div class="mt-4">
+    <div class="text-center mt-4">
+      <%= form.hidden_field :total_price, value: @cart_items.sum { |item| item.quantity * item.product.price } %>
       <%= form.submit "Place Order", class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
 <%= render 'shared/footer' %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Радіо-кнопки для доставки
+        const deliveryOptions = document.querySelectorAll('input[name="order[delivery_option]"]');
+        const deliveryDetails = document.getElementById('delivery-details-container');
+
+        deliveryOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                if (this.checked) {
+                    deliveryDetails.style.display = 'block';
+                }
+            });
+        });
+
+        // Радіо-кнопки для оплати
+        const paymentOptions = document.querySelectorAll('input[name="order[payment_option]"]');
+        const paymentDetails = document.getElementById('payment-details');
+
+        paymentOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                if (this.checked) {
+                    paymentDetails.style.display = 'block';
+                }
+            });
+        });
+    });
+</script>
+

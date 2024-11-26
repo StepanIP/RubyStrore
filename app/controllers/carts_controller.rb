@@ -24,12 +24,20 @@ class CartsController < ApplicationController
     end
   end
 
+  def update_quantity
+    @cart_item = CartItem.find(params[:id])
+    if @cart_item.update(quantity: params[:quantity])
+      redirect_to cart_path, notice: 'Quantity updated successfully.'
+    else
+      redirect_to cart_path, alert: 'Failed to update quantity.'
+    end
+  end
+
+  # app/controllers/carts_controller.rb
   def checkout
     @cart_items = current_user.cart.cart_items.includes(:product)
-    @delivery_options = ['Standard Shipping', 'Express Shipping']
-    @payment_options = ['Credit Card', 'PayPal']
-
-    redirect_to products_path
+    @delivery_options = ['Standard Shipping', 'Express Shipping', 'Same Day Delivery', 'In-Store Pickup', 'Curbside Pickup']
+    @payment_options = ['Credit Card', 'PayPal', 'Apple Pay', 'Google Pay', 'Venmo', 'Cash']
   end
 
   def process_checkout
