@@ -16,7 +16,7 @@ gem 'kaminari',  '~> 1.2.1'
 gem 'will_paginate'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
-gem 'bootstrap', '~> 5.1.3'
+gem 'bootstrap', '~> 5.3.3'
 gem 'turbolinks', '~> 5.2.1'
 gem 'mini_racer', platforms: :ruby
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
